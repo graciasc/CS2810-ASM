@@ -1,0 +1,16 @@
+;Gracias Claude 
+;Date 11/16/17
+;Project 1 CS2810
+;
+;
+;
+;Initialization
+
+.ORIG x3000
+
+LEA R0 , TEMPLATE  
+
+PUTS
+HALT ; End the program
+TEMPLATE .STRINGZ " CS2810\n Gracias Claude \n Project #1" ; Displays 
+.END
