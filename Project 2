@@ -1,0 +1,60 @@
+;Unfinished program
+;still working on it.
+;
+.ORIG X3000
+LEA R0, TEMPLATE
+ST R1, SaveR1
+ST R2, SaveR2
+ST R3,SaveR3
+LD R2, Newline
+L1	LDI R3, DSR
+BRzp L1
+STI R2,DDR
+;
+LEA R1,Prompt
+Loop LDR R0,R1,#0 ; Loop input for the first string
+BRz Input
+L2 LDI R3,DSR
+BRzp  L2 
+STI R0, DDR
+ADD R1,R1,#1
+BRzp Loop
+;
+LEA R1, Prompt2 
+Loop2 LDR R0,R1,#0 ; The loop that inputs for the second string
+BRz Input
+L22 LDI R3,DSR
+BRzp  L22
+STI R0, DDR ; Write next prompt character
+ADD R1,R1,#1
+BRzp Loop2
+;
+Input LDI R3, KBSR ; Poll until a character is typed 
+BRzp Input
+LDI R0,KBDR
+L3 LDI R3,DSR
+BRzp L3
+STI R0,DDR ; Echo input character into R0
+L4 LDI R3, DSR
+BRzp L4
+STI R2, DDR
+LD R1, SaveR1
+LD R2, SaveR2
+LD R3, SaveR3
+PUTS
+HALT 
+SaveR1 .BLKW 1 ; Memory for registers saved.
+SaveR2 .BLKW 1 
+SaveR3 .BLKW 1 
+DSR .FILL XFE04
+DDR .FILL XFE06
+KBSR .FILL XFE00
+KBDR .FILL XFE02
+Newline .FILL X000A
+Prompt .STRINGZ "Please input a character:"
+Prompt2 .STRINGZ "The system recieved a character:\n"
+TEMPLATE .STRINGZ "CS2810\nGracias Claude\n"
+
+
+
+.END
